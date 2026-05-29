@@ -56,6 +56,56 @@ type
 
   TCommonCalendarClass = class(TCommonCalendar);
 
+const
+  IDI_ERROR_ID = 32513;
+  IDI_QUESTION_ID = 32514;
+  IDI_WARNING_ID = 32515;
+  IDI_INFORMATION_ID = 32516;
+  IDI_WINLOGO_ID = 32517;
+  IDI_SHIELD_ID = 32518;
+
+  // Private comctl32.dll TaskDialog icon resource IDs.
+  COMCTL32_TD_SHIELD_ICON = 78;
+  COMCTL32_TD_INFORMATION_ICON = 81;
+  COMCTL32_TD_WARNING_ICON = 84;
+  COMCTL32_TD_ERROR_ICON = 98;
+  COMCTL32_TD_QUESTION_ICON = 99;
+
+  // Private comctl32.dll / shell32.dll image resource IDs used by shell dialogs.
+  COMCTL32_UP_GLYPH_NORMAL = 16817;
+  COMCTL32_UP_GLYPH_DISABLED = 16818;
+  SHELL32_PIN_ICON = 5100;
+
+  // Private explorerframe.dll bitmap resource IDs.
+  EXPLORERFRAME_NAV_BACKGROUND_AERO = 280;
+  EXPLORERFRAME_NAV_BACKGROUND_CLASSIC = 281;
+  EXPLORERFRAME_COMMAND_GLYPH_STRIP_AERO = 288;
+  EXPLORERFRAME_COMMAND_GLYPH_STRIP_CLASSIC_1 = 289;
+  EXPLORERFRAME_COMMAND_GLYPH_STRIP_CLASSIC_2 = 290;
+
+  EXPLORERFRAME_NAV_BUTTON_AERO_NORMAL = 577;
+  EXPLORERFRAME_NAV_BUTTON_AERO_HOT = 578;
+  EXPLORERFRAME_NAV_BUTTON_AERO_DISABLED = 579;
+  EXPLORERFRAME_NAV_BUTTON_AERO_DROPDOWN = 581;
+  EXPLORERFRAME_NAV_BUTTON_CLASSIC_NORMAL = 582;
+  EXPLORERFRAME_NAV_BUTTON_CLASSIC_HOT = 583;
+  EXPLORERFRAME_NAV_BUTTON_CLASSIC_DISABLED = 584;
+
+  EXPLORERFRAME_SEARCH_MAGNIFIER_AERO_FIRST = 34560;
+  EXPLORERFRAME_SEARCH_MAGNIFIER_AERO_LAST = 34562;
+  EXPLORERFRAME_SEARCH_MAGNIFIER_CLASSIC_FIRST = 34563;
+  EXPLORERFRAME_SEARCH_MAGNIFIER_CLASSIC_LAST = 34568;
+  EXPLORERFRAME_SEARCH_CLOSE_NORMAL_AERO_FIRST = 34569;
+  EXPLORERFRAME_SEARCH_CLOSE_NORMAL_AERO_LAST = 34571;
+  EXPLORERFRAME_SEARCH_CLOSE_NORMAL_CLASSIC_FIRST = 34572;
+  EXPLORERFRAME_SEARCH_CLOSE_NORMAL_CLASSIC_LAST = 34574;
+  EXPLORERFRAME_SEARCH_CLOSE_HOT_AERO_FIRST = 34575;
+  EXPLORERFRAME_SEARCH_CLOSE_HOT_AERO_LAST = 34577;
+  EXPLORERFRAME_SEARCH_CLOSE_HOT_CLASSIC_FIRST = 34578;
+  EXPLORERFRAME_SEARCH_CLOSE_HOT_CLASSIC_LAST = 34580;
+  EXPLORERFRAME_SEARCH_CLOSE_HOT_AERO_ALT_FIRST = 34581;
+  EXPLORERFRAME_SEARCH_CLOSE_HOT_AERO_ALT_LAST = 34583;
+
 var
   VCLStylesBrush: TObjectDictionary<string, TListStyleBrush>;
   VCLStylesLock: TCriticalSection = nil;
@@ -444,31 +494,31 @@ begin
 
       //OutputDebugString(PChar('Detour_LoadIconW '+s+ ' Module Name '+GetModuleName(_hInstance)+' _hInstance '+IntToHex(_hInstance, 8) ));
       case NativeUInt(lpIconName) of
-        78:
+        COMCTL32_TD_SHIELD_ICON:
           DrawIcon(fa_shield);
-        81:
+        COMCTL32_TD_INFORMATION_ICON:
           DrawIcon(fa_info_circle);
-        84:
+        COMCTL32_TD_WARNING_ICON:
           DrawIcon(fa_warning);
-        98:
+        COMCTL32_TD_ERROR_ICON:
           DrawIcon(fa_minus_circle);
-        99:
+        COMCTL32_TD_QUESTION_ICON:
           DrawIcon(fa_question_circle);
       end;
 
       if _hInstance = 0 then
         case NativeUInt(lpIconName) of
-          32518:
+          IDI_SHIELD_ID:
             DrawIcon(fa_shield);
-          32516:
+          IDI_INFORMATION_ID:
             DrawIcon(fa_info_circle);
-          32515:
+          IDI_WARNING_ID:
             DrawIcon(fa_warning);
-          32513:
+          IDI_ERROR_ID:
             DrawIcon(fa_minus_circle);
-          32514:
+          IDI_QUESTION_ID:
             DrawIcon(fa_question_circle);
-          32517:
+          IDI_WINLOGO_ID:
             DrawIcon(fa_windows);
         end;
 
@@ -504,17 +554,17 @@ begin
     case NativeUInt(ImageName) of
       //W8, W10
       //comctl32.dll
-      16817:
+      COMCTL32_UP_GLYPH_NORMAL:
         begin
           Exit(FontAwesome.GetIcon(fa_arrow_up, X, Y, StyleServices.GetSystemColor(clBtnText), StyleServices.GetSystemColor(clBtnFace), 0));
         end;
-      16818:
+      COMCTL32_UP_GLYPH_DISABLED:
         begin
           Exit(FontAwesome.GetIcon(fa_arrow_up, X, Y, StyleServices.GetSystemColor(clGrayText), StyleServices.GetSystemColor(clBtnFace), 0));
         end;
       //W10
       //shell32.dll
-      5100:
+      SHELL32_PIN_ICON:
         begin
           //OutputDebugString(PChar('GetModuleName ' + GetModuleName(hInst)));
           Exit(FontAwesome.GetIcon(fa_thumb_tack, 16, 16, 12, 12, StyleServices.GetSystemColor(clGrayText), StyleServices.GetSystemColor(clWindow), -22, iaRight));
@@ -542,7 +592,7 @@ begin
           LRect := Rect(0, 0, LBitmap.Width, LBitmap.Height);
           case NativeUInt(ImageName) of
             // Right Arrow, cross button, refresh, down arrow
-            288:
+            EXPLORERFRAME_COMMAND_GLYPH_STRIP_AERO:
               begin
                 LColor := StyleServices.GetSystemColor(clBtnText);
                 Bitmap32_SetAlphaAndColor(LBitmap, 1, LBackColor);
@@ -580,8 +630,8 @@ begin
           LRect := Rect(0, 0, LBitmap.Width, LBitmap.Height);
           case NativeUInt(ImageName) of
            //Magnifier
-            34560..34562,  // Aero Enabled
-            34563..34568:  // Classic Theme
+            EXPLORERFRAME_SEARCH_MAGNIFIER_AERO_FIRST..EXPLORERFRAME_SEARCH_MAGNIFIER_AERO_LAST,  // Aero Enabled
+            EXPLORERFRAME_SEARCH_MAGNIFIER_CLASSIC_FIRST..EXPLORERFRAME_SEARCH_MAGNIFIER_CLASSIC_LAST:  // Classic Theme
               begin
                 LColor := StyleServices.GetSystemColor(clHighlight);
                 Bitmap32_SetAlphaAndColor(LBitmap, 1, LBackColor);
@@ -591,8 +641,8 @@ begin
               end;
 
            //cross button normal
-              34569..34571,  // Aero Enabled
-              34572..34574:   // Classic Theme
+              EXPLORERFRAME_SEARCH_CLOSE_NORMAL_AERO_FIRST..EXPLORERFRAME_SEARCH_CLOSE_NORMAL_AERO_LAST,  // Aero Enabled
+              EXPLORERFRAME_SEARCH_CLOSE_NORMAL_CLASSIC_FIRST..EXPLORERFRAME_SEARCH_CLOSE_NORMAL_CLASSIC_LAST:   // Classic Theme
               begin
                 LColor := StyleServices.GetSystemColor(clWindowText);
                 Bitmap32_SetAlphaAndColor(LBitmap, 1, LBackColor);
@@ -601,9 +651,9 @@ begin
               end;
 
            //cross button hot
-              34575..34577, // Aero Enabled
-              34581..34583, // Aero Enabled
-              34578..34580:  // Classic Theme
+              EXPLORERFRAME_SEARCH_CLOSE_HOT_AERO_FIRST..EXPLORERFRAME_SEARCH_CLOSE_HOT_AERO_LAST, // Aero Enabled
+              EXPLORERFRAME_SEARCH_CLOSE_HOT_AERO_ALT_FIRST..EXPLORERFRAME_SEARCH_CLOSE_HOT_AERO_ALT_LAST, // Aero Enabled
+              EXPLORERFRAME_SEARCH_CLOSE_HOT_CLASSIC_FIRST..EXPLORERFRAME_SEARCH_CLOSE_HOT_CLASSIC_LAST:  // Classic Theme
               begin
                 LColor := StyleServices.GetSystemColor(clHighlight);
                 Bitmap32_SetAlphaAndColor(LBitmap, 1, LBackColor);
@@ -613,7 +663,7 @@ begin
 
            // Aero Enabled
            // Right Arrow, cross button, refresh, down arrow
-              288:
+              EXPLORERFRAME_COMMAND_GLYPH_STRIP_AERO:
               begin
                 LColor := StyleServices.GetSystemColor(clBtnText);
                 Bitmap32_SetAlphaAndColor(LBitmap, 1, LBackColor);
@@ -635,7 +685,7 @@ begin
 
             // Classic Theme
             // Right Arrow, cross button, refresh, down arrow
-              289, 290:
+              EXPLORERFRAME_COMMAND_GLYPH_STRIP_CLASSIC_1, EXPLORERFRAME_COMMAND_GLYPH_STRIP_CLASSIC_2:
               begin
                 LColor := StyleServices.GetSystemColor(clBtnText);
                 Bitmap32_SetAlphaAndColor(LBitmap, 1, LBackColor);
@@ -657,16 +707,16 @@ begin
 
             // Aero Enabled
             // navigation buttons (arrows)
-              577..579, 581:
+              EXPLORERFRAME_NAV_BUTTON_AERO_NORMAL..EXPLORERFRAME_NAV_BUTTON_AERO_DISABLED, EXPLORERFRAME_NAV_BUTTON_AERO_DROPDOWN:
               begin
                 case NativeUInt(ImageName) of
-                  577:
+                  EXPLORERFRAME_NAV_BUTTON_AERO_NORMAL:
                     LColor := StyleServices.GetSystemColor(clBtnText);
-                  578:
+                  EXPLORERFRAME_NAV_BUTTON_AERO_HOT:
                     LColor := StyleServices.GetSystemColor(clHighlight);
-                  579:
+                  EXPLORERFRAME_NAV_BUTTON_AERO_DISABLED:
                     LColor := StyleServices.GetSystemColor(clGrayText);
-                  581:
+                  EXPLORERFRAME_NAV_BUTTON_AERO_DROPDOWN:
                     LColor := StyleServices.GetSystemColor(clBtnText);
                 else
                   LColor := StyleServices.GetSystemColor(clBtnText);
@@ -685,14 +735,14 @@ begin
 
             //Classic Theme
             // navigation buttons (arrows)
-              582..584:
+              EXPLORERFRAME_NAV_BUTTON_CLASSIC_NORMAL..EXPLORERFRAME_NAV_BUTTON_CLASSIC_DISABLED:
               begin
                 case NativeUInt(ImageName) of
-                  582:
+                  EXPLORERFRAME_NAV_BUTTON_CLASSIC_NORMAL:
                     LColor := StyleServices.GetSystemColor(clBtnText);
-                  583:
+                  EXPLORERFRAME_NAV_BUTTON_CLASSIC_HOT:
                     LColor := StyleServices.GetSystemColor(clHighlight);
-                  584:
+                  EXPLORERFRAME_NAV_BUTTON_CLASSIC_DISABLED:
                     LColor := StyleServices.GetSystemColor(clGrayText);
                 else
                   LColor := StyleServices.GetSystemColor(clBtnText);
@@ -718,7 +768,7 @@ begin
 
             //Aero Enabled
             //background navigation buttons
-              280:
+              EXPLORERFRAME_NAV_BACKGROUND_AERO:
               begin
                 Bitmap32_SetAlphaAndColor(LBitmap, 1, LBackColor);
 
@@ -744,7 +794,7 @@ begin
 
             //Classic Theme
             //background navigation buttons
-              281:
+              EXPLORERFRAME_NAV_BACKGROUND_CLASSIC:
               begin
                 Bitmap32_SetAlphaAndColor(LBitmap, 1, LBackColor);
               end;
