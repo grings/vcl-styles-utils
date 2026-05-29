@@ -15,7 +15,7 @@
 // The Original Code is Vcl.Styles.UxTheme.pas.
 //
 // The Initial Developer of the Original Code is Rodrigo Ruz V.
-// Portions created by Rodrigo Ruz V. are Copyright (C) 2013-2025 Rodrigo Ruz V.
+// Portions created by Rodrigo Ruz V. are Copyright (C) 2013-2026 Rodrigo Ruz V.
 // All Rights Reserved.
 //
 // **************************************************************************************************
@@ -78,6 +78,10 @@ uses
   Vcl.Styles.Utils.SysControls,
   Vcl.Styles.Utils.Misc;
 
+const
+  VS_PART_COMMON = 0;
+  VS_STATE_COMMON = 0;
+
 {$IFDEF HOOK_ProgressBar}
 const
   VSCLASS_PROGRESS_INDERTERMINATE = 'Indeterminate::Progress';
@@ -92,10 +96,41 @@ const
   VSCLASS_LISTVIEWPOPUP = 'ListViewPopup';
 {$ENDIF}
 
+{$IFDEF HOOK_ComboBox}
+const
+  VSCLASS_CFD_COMBOBOX = 'CFD::ComboBox';
+
+  // Reverse-engineered ComboBox drop-down item part/states.
+  CP_DROPDOWNITEM = 9;
+  CPDI_NORMAL = 1;
+  CPDI_HIGHLIGHTED = 2;
+{$ENDIF}
+
 {$IFDEF HOOK_CommandModule}
 const
   VSCLASS_COMMANDMODULE = 'CommandModule';
   VSCLASS_CPLCOMMANDMODULE = 'CPLCommandModule::CommandModule';
+
+  // Reverse-engineered shell CommandModule parts/states.
+  CM_MODULEBACKGROUND = 1;
+  CM_MODULEBACKGROUNDCOLORS = 2;
+  CM_TASKBUTTON = 3;
+  CM_SPLITBUTTONLEFT = 4;
+  CM_SPLITBUTTONRIGHT = 5;
+  CM_MENUGLYPH = 6;
+  CM_OVERFLOWGLYPH = 7;
+  CM_LIBRARYPANEMENUGLYPH = 8;
+  CM_LIBRARYPANETOPVIEW = 9;
+  CM_LIBRARYPANEBACKGROUND = 10;
+  CM_LIBRARYPANEOVERLAY = 12;
+
+  CMS_COMMON = 0;
+  CMS_NORMAL = 1;
+  CMS_HOT = 2;
+  CMS_PRESSED = 3;
+  CMS_KEYFOCUSED = 4;
+  CMS_NEARHOT = 5;
+  CMS_DISABLED = 6;
 {$ENDIF}
 
 {$IFDEF HOOK_SearchBox}
@@ -105,47 +140,118 @@ const
   VSCLASS_CompositedSEARCHBOX = 'SearchBoxCompositedSearchBox::SearchBox';
   VSCLASS_SearchBoxComposited = 'SearchBoxComposited::SearchBox';
   VSCLASS_INACTIVESEARCHBOX = 'InactiveSearchBoxCompositedSearchBox::SearchBox';
+
+  // Reverse-engineered shell SearchBox parts/states.
+  SEARCHBOX_BACKGROUND = 1;
+  SEARCHBOX_CLEARBUTTON = 2;
+  SEARCHBOX_SEARCHBUTTON = 3;
+  SBS_COMMON = 0;
+  SBS_NORMAL = 1;
+  SBS_HOT = 2;
+  SBS_PRESSED = 3;
+  SBS_FOCUSED = 4;
 {$ENDIF}
 
 {$IFDEF HOOK_AddressBand}
 const
   VSCLASS_ADDRESSBAND = 'AddressBand';
+
+  // Reverse-engineered shell AddressBand parts/states.
+  ADDRESSBAND_BACKGROUND = 1;
+  ABS_COMMON = 0;
+  ABS_NORMAL = 1;
+  ABS_HOT = 2;
+  ABS_FOCUSED = 4;
 {$ENDIF}
 
 {$IFDEF HOOK_PreviewPane}
 const
   VSCLASS_PREVIEWPANE = 'PreviewPane';
   VSCLASS_READINGPANE = 'ReadingPane';
+
+  // Reverse-engineered shell ReadingPane parts/states.
+  READINGPANE_BACKGROUNDCOLORS = 1;
+  READINGPANE_LABEL = 2;
+
+  // Reverse-engineered shell PreviewPane parts/states.
+  PREVIEWPANE_PREVIEWBACKGROUND = 1;
+  PREVIEWPANE_EDITPROPERTIES = 2;
+  PREVIEWPANE_NAVPANESIZER = 3;
+  PREVIEWPANE_READINGPANESIZER = 4;
+  PREVIEWPANE_TITLE = 5;
+  PREVIEWPANE_LABEL = 6;
+  PREVIEWPANE_VALUE = 7;
+  PREVIEWPANE_LABELCID = 8;
+  PREVIEWPANE_VALUECID = 9;
+  PPS_COMMON = 0;
+  PPS_NORMAL = 1;
+  PPS_HOT = 2;
 {$ENDIF}
 
 {$IFDEF HOOK_TRYHARDER}
 const
   VSCLASS_TRYHARDER = 'TryHarder';
+
+  // Reverse-engineered shell TryHarder parts/states.
+  TRYHARDER_COMMON = 0;
+  TRYHARDER_BUTTON = 1;
+  TRYHARDER_VERTICAL = 2;
+  THS_COMMON = 0;
+  THS_NORMAL = 1;
+  THS_HOT = 2;
 {$ENDIF}
 
 {$IFDEF HOOK_BREADCRUMBAR}
 const
   VSCLASS_BREADCRUMBAR = 'BreadcrumbBar';
+
+  // Reverse-engineered shell BreadcrumbBar parts/states.
+  BCB_OVERFLOWCHEVRON = 1;
+  BCBS_COMMON = 0;
+  BCBS_NORMAL = 1;
+  BCBS_HOT = 2;
+  BCBS_PRESSED = 3;
+  BCBS_FADEOUTHOT = 8;
 {$ENDIF}
 
 {$IFDEF HOOK_Navigation}
 const
   VSCLASS_NAVIGATION = 'Navigation';
   VSCLASS_COMMONITEMSDIALOG = 'CommonItemsDialog';
+
+  // Reverse-engineered shell CommonItemsDialog parts/states.
+  CID_BACKGROUND = 1;
+  CIDS_COMMON = 0;
 {$ENDIF}
 
 {$IFDEF HOOK_TreeView}
 const
   VSCLASS_PROPERTREE = 'PROPERTREE';
+  VSCLASS_EXPLORERNAVPANE = 'ExplorerNavPane';
+{$ENDIF}
+
+{$IFDEF HOOK_VirtualShell}
+const
+  // Private/non-SDK scrollbar part used by Mustangpeak Virtual Shell.
+  VIRTUALSHELL_SBP_BACKGROUND = 11;
 {$ENDIF}
 
 {$IFDEF HOOK_InfoBar}
 const
   VSCLASS_INFOBAR = 'InfoBar';
+
+  // Reverse-engineered shell InfoBar parts/states.
+  IB_BACKGROUND = 1;
+  IBS_NORMAL = 1;
+  IBS_HOT = 2;
+  IBS_PRESSED = 3;
+  IBS_SELECTED = 4;
 {$ENDIF}
 
 {$IFDEF HOOK_Menu}
 const
+  VSCLASS_MENUSTYLE = 'MenuStyle';
+
   MARLETT_RESTORE_CHAR = Char(50);
   MARLETT_MINIMIZE_CHAR = Char(48);
   MARLETT_CLOSE_CHAR = Char(114);
@@ -154,6 +260,8 @@ const
 
 {$IFDEF HOOK_ExplorerStatusBar}
   VSCLASS_EXPLORERSTATUSBAR = 'ExplorerStatusBar';
+  EXPLORERSTATUSBAR_COMMON = 0;
+  ESBS_COMMON = 0;
 {$IFEND}
 
 type
@@ -350,7 +458,7 @@ begin
         OldMode := SetBkMode(DC, Transparent);
         WinApi.Windows.DrawText(DC, Sign, 1, DestRect, DT_LEFT or DT_SINGLELINE);
         SetBkMode(DC, OldMode);
-        SelectObject(DC, oldColor);
+        SetTextColor(DC, oldColor);
       finally
         if pOldFont <> 0 then
           SelectObject(DC, pOldFont);
@@ -375,13 +483,16 @@ begin
   VCLStylesLock.Enter;
   try
     Result := Trampoline_UxTheme_OpenThemeData(hwnd, pszClassList);
-    if THThemesClasses.ContainsKey(Result) then
-      THThemesClasses.Remove(Result);
-    THThemesClasses.Add(Result, pszClassList);
+    if Result <> 0 then
+    begin
+      if THThemesClasses.ContainsKey(Result) then
+        THThemesClasses.Remove(Result);
+      THThemesClasses.Add(Result, pszClassList);
 
-    if THThemesHWND.ContainsKey(Result) then
-      THThemesHWND.Remove(Result);
-    THThemesHWND.Add(Result, hwnd);
+      if THThemesHWND.ContainsKey(Result) then
+        THThemesHWND.Remove(Result);
+      THThemesHWND.Add(Result, hwnd);
+    end;
   finally
     VCLStylesLock.Leave;
   end;
@@ -401,13 +512,16 @@ begin
   VCLStylesLock.Enter;
   try
     Result := Trampoline_UxTheme_OpenThemeDataForDPI(hwnd, pszClassList, dpi);
-    if THThemesClasses.ContainsKey(Result) then
-      THThemesClasses.Remove(Result);
-    THThemesClasses.Add(Result, pszClassList);
+    if Result <> 0 then
+    begin
+      if THThemesClasses.ContainsKey(Result) then
+        THThemesClasses.Remove(Result);
+      THThemesClasses.Add(Result, pszClassList);
 
-    if THThemesHWND.ContainsKey(Result) then
-      THThemesHWND.Remove(Result);
-    THThemesHWND.Add(Result, hwnd);
+      if THThemesHWND.ContainsKey(Result) then
+        THThemesHWND.Remove(Result);
+      THThemesHWND.Add(Result, hwnd);
+    end;
   finally
     VCLStylesLock.Leave;
   end;
@@ -426,17 +540,36 @@ begin
   VCLStylesLock.Enter;
   try
     Result := Trampoline_UxTheme_OpenThemeDataEx(hwnd, pszClassList, dwFlags);
-    if THThemesClasses.ContainsKey(Result) then
-      THThemesClasses.Remove(Result);
-    THThemesClasses.Add(Result, pszClassList);
+    if Result <> 0 then
+    begin
+      if THThemesClasses.ContainsKey(Result) then
+        THThemesClasses.Remove(Result);
+      THThemesClasses.Add(Result, pszClassList);
 
-    if THThemesHWND.ContainsKey(Result) then
-      THThemesHWND.Remove(Result);
-    THThemesHWND.Add(Result, hwnd);
+      if THThemesHWND.ContainsKey(Result) then
+        THThemesHWND.Remove(Result);
+      THThemesHWND.Add(Result, hwnd);
+    end;
   finally
     VCLStylesLock.Leave;
   end;
   // OutputDebugString(PChar('Detour_UxTheme_OpenThemeDataEx '+pszClassList+' hTheme '+IntToStr(Result)+' Handle '+IntToHex(hwnd, 8)));
+end;
+
+function Detour_UxTheme_CloseThemeData(hTheme: hTheme): HRESULT; stdcall;
+begin
+  if ExecutingInMainThread then
+  begin
+    VCLStylesLock.Enter;
+    try
+      THThemesClasses.Remove(hTheme);
+      THThemesHWND.Remove(hTheme);
+    finally
+      VCLStylesLock.Leave;
+    end;
+  end;
+
+  Result := Trampoline_UxTheme_CloseThemeData(hTheme);
 end;
 
 function Detour_UxTheme_DrawThemeMain(hTheme: hTheme; hdc: hdc; iPartId, iStateId: Integer; const pRect: TRect;
@@ -602,13 +735,13 @@ begin
     begin
       pColor := clNone;
       case iPartId of
-        0:
+        TRYHARDER_COMMON:
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
+            THS_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
           end;
-        1:
+        TRYHARDER_BUTTON:
           case iStateId of
-            1: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
+            THS_NORMAL: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
           end;
       end;
 
@@ -626,9 +759,9 @@ begin
     if SameText(VSCLASS_SEARCHEDITBOX, LThemeClass) then
     begin
       case iPartId of
-        1:
+        SEARCHBOX_BACKGROUND:
           case iStateId of
-            2: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
+            SBS_HOT: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
           end;
       end;
 
@@ -649,11 +782,11 @@ begin
       case iPartId of
         TTP_STANDARD:
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clBtnText));
+            VS_STATE_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clBtnText));
           end;
-        4:
+        TTP_BALLOONTITLE:
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clHighlight));
+            VS_STATE_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clHighlight));
           end;
       end;
 
@@ -668,14 +801,14 @@ begin
     else
     {$ENDIF}
     {$IFDEF HOOK_ComboBox}
-    if SameText(LThemeClass, 'CFD::ComboBox') then
+    if SameText(LThemeClass, VSCLASS_CFD_COMBOBOX) then
     begin
       pColor := clNone;
       case iPartId of
-        9:
+        CP_DROPDOWNITEM:
           case iStateId  of
-            1: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindow));
-            2: pColor := ColorToRGB(StyleServices.GetSystemColor(clHighlight));
+            CPDI_NORMAL: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindow));
+            CPDI_HIGHLIGHTED: pColor := ColorToRGB(StyleServices.GetSystemColor(clHighlight));
           end;
       end;
 
@@ -690,13 +823,13 @@ begin
     else
     {$ENDIF}
     {$IFDEF HOOK_Menu}
-    if SameText(LThemeClass, 'MenuStyle') then
+    if SameText(LThemeClass, VSCLASS_MENUSTYLE) then
     begin
       pColor := clNone;
       case iPartId of
-        13:
+        MENU_POPUPGUTTER:
           case iStateId  of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clBtnFace));
+            VS_STATE_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clBtnFace));
           end;
       end;
 
@@ -716,9 +849,9 @@ begin
       // Fix a theme issue in Mustangpeak Virtual Shell
       pColor := clNone;
       case iPartId of
-        11:
+        VIRTUALSHELL_SBP_BACKGROUND:
           case iStateId  of
-            0: pColor := ColorToRGB(StyleServices.GetStyleColor(scPanel));
+            VS_STATE_COMMON: pColor := ColorToRGB(StyleServices.GetStyleColor(scPanel));
           end;
       end;
 
@@ -739,7 +872,7 @@ begin
 
         TEXT_MAININSTRUCTION:
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clHighlightText));
+            VS_STATE_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clHighlightText));
           end;
       end;
 
@@ -760,7 +893,7 @@ begin
 
         HP_HEADERITEM:
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clBtnText));
+            VS_STATE_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clBtnText));
           end;
 
       end;
@@ -781,14 +914,14 @@ begin
       pColor := clNone;
       case iPartId of
 
-        1: // preview background
+        READINGPANE_BACKGROUNDCOLORS: // preview background
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindow));
+            PPS_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindow));
           end;
 
-        2: // preview text
+        READINGPANE_LABEL: // preview text
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
+            PPS_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
           end;
       end;
 
@@ -804,27 +937,27 @@ begin
     begin
       pColor := clNone;
       case iPartId of
-        5:
+        PREVIEWPANE_TITLE:
           case iStateId of
-            0: ColorToRGB(StyleServices.GetSystemColor(clHighlight));
+            PPS_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clHighlight));
           end;
-        6:
+        PREVIEWPANE_LABEL:
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clBtnText));
+            PPS_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clBtnText));
           end;
-        7:
+        PREVIEWPANE_VALUE:
           case iStateId of
-            1: pColor := GetStyleHighLightColor();
-            2: pColor := ColorToRGB(clGreen);
+            PPS_NORMAL: pColor := GetStyleHighLightColor();
+            PPS_HOT: pColor := ColorToRGB(clGreen);
           end;
-        8:
+        PREVIEWPANE_LABELCID:
           case iStateId of
-            0: pColor := ColorToRGB(clRed);
+            PPS_COMMON: pColor := ColorToRGB(clRed);
           end;
-        9:
+        PREVIEWPANE_VALUECID:
           case iStateId of
-            1: pColor := ColorToRGB(clBlue);
-            2: pColor := ColorToRGB(clYellow);
+            PPS_NORMAL: pColor := ColorToRGB(clBlue);
+            PPS_HOT: pColor := ColorToRGB(clYellow);
           end;
       end;
 
@@ -880,13 +1013,13 @@ begin
     {$ENDIF}
     {$IFDEF HOOK_TreeView}
     if SameText(LThemeClass, VSCLASS_TREEVIEW) or SameText(LThemeClass, VSCLASS_PROPERTREE) or
-       SameText(LThemeClass, 'ExplorerNavPane') then
+       SameText(LThemeClass, VSCLASS_EXPLORERNAVPANE) then
     begin
       pColor := clNone;
       case iPartId of
-        0, 2:
+        VS_PART_COMMON, TVP_GLYPH:
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindow)); // OK
+            VS_STATE_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindow)); // OK
           end;
       end;
 
@@ -908,18 +1041,19 @@ begin
 
       pColor := clNone;
       case iPartId of
-        0:
+        VS_PART_COMMON:
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindow));
+            VS_STATE_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindow));
           end;
 
         LVP_LISTITEM:
           case iStateId of
-            0: pColor := ColorToRGB(clRed);
+            VS_STATE_COMMON: pColor := ColorToRGB(clRed);
           end;
 
         LVP_LISTSORTEDDETAIL:
           case iStateId of
+            // TODO: Resolve these states from actual .msstyles data before naming them.
             1: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
             // normal main column (name)
             2: pColor := ColorToRGB(clWindowText);
@@ -936,12 +1070,12 @@ begin
 
         LVP_EMPTYTEXT:
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clHighlight));
+            VS_STATE_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clHighlight));
           end;
 
         LVP_GROUPHEADER:
           case iStateId of
-            0: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
+            VS_STATE_COMMON: pColor := ColorToRGB(StyleServices.GetSystemColor(clWindowText));
           end;
       end;
 
@@ -963,32 +1097,32 @@ begin
       case iPartId of
 
         // button with dropdown
-        3:
+        CM_TASKBUTTON:
           case iStateId of
-            1: pColor := ColorToRGB(GetStyleBtnTextColor); // GetStyleHighLightColor;
-            6: pColor := ColorToRGB(clYellow); // StyleServices.GetSystemColor(clBtnShadow);
+            CMS_NORMAL: pColor := ColorToRGB(GetStyleBtnTextColor); // GetStyleHighLightColor;
+            CMS_DISABLED: pColor := ColorToRGB(clYellow); // StyleServices.GetSystemColor(clBtnShadow);
           end;
-        4:
+        CM_SPLITBUTTONLEFT:
           case iStateId of
-            1: pColor := ColorToRGB(GetStyleBtnTextColor);
+            CMS_NORMAL: pColor := ColorToRGB(GetStyleBtnTextColor);
           end;
 
-        9:
+        CM_LIBRARYPANETOPVIEW:
           case iStateId of
-            1: pColor := ColorToRGB(GetStyleBtnTextColor);
+            CMS_NORMAL: pColor := ColorToRGB(GetStyleBtnTextColor);
               // ColorToRGB(StyleServices.GetSystemColor(clBtnText));
             // Highlight
-            2: pColor := ColorToRGB(GetStyleBtnTextColor);
+            CMS_HOT: pColor := ColorToRGB(GetStyleBtnTextColor);
               // ColorToRGB(StyleServices.GetSystemColor(clBtnText)); //OK
-            3: pColor := ColorToRGB(GetStyleBtnTextColor);
+            CMS_PRESSED: pColor := ColorToRGB(GetStyleBtnTextColor);
               // ColorToRGB(StyleServices.GetSystemColor(clBtnText)); //OK
-            6: pColor := ColorToRGB(clLime); // StyleServices.GetSystemColor(clBtnShadow);
+            CMS_DISABLED: pColor := ColorToRGB(clLime); // StyleServices.GetSystemColor(clBtnShadow);
           end;
 
         // header text
-        10:
+        CM_LIBRARYPANEBACKGROUND:
           case iStateId of
-            1: pColor := ColorToRGB(GetStyleHighLightColor);
+            CMS_NORMAL: pColor := ColorToRGB(GetStyleHighLightColor);
           end;
       end;
 
@@ -1002,7 +1136,7 @@ begin
     if SameText(LThemeClass, VSCLASS_EXPLORERSTATUSBAR) then
     begin
       pColor := clNone;
-      if (iPartId = 0) and (iStateId = 0) then
+      if (iPartId = EXPLORERSTATUSBAR_COMMON) and (iStateId = ESBS_COMMON) then
       begin
         pColor := ColorToRGB(StyleServices.GetSystemColor(clWindow));
       end;
@@ -1079,7 +1213,7 @@ begin
     if SameText(LThemeClass, VSCLASS_TOOLBAR) then // OK
     begin
       case iPartId of
-        0:
+        VS_PART_COMMON:
           begin
             case iStateId of
               TS_NORMAL:
@@ -1279,7 +1413,6 @@ begin
               StyleServices.DrawText(LCanvas.Handle, LDetails, LText, LRect, TTextFormatFlags(dwTextFlags),
                 ThemeTextColor);
             finally
-              DeleteObject(LCanvas.Font.Handle);
               LCanvas.Handle := 0;
               LCanvas.Free;
               RestoreDC(hdc, SaveIndex);
@@ -1322,7 +1455,6 @@ begin
               StyleServices.DrawText(LCanvas.Handle, LDetails, LText, LRect, TTextFormatFlags(dwTextFlags),
                 ThemeTextColor);
             finally
-              DeleteObject(LCanvas.Font.Handle);
               LCanvas.Handle := 0;
               LCanvas.Free;
               RestoreDC(hdc, SaveIndex);
@@ -1412,7 +1544,6 @@ begin
               StyleServices.DrawText(LCanvas.Handle, LDetails, string(pszText), LRect,
                 TTextFormatFlags(dwTextFlags), ThemeTextColor);
             finally
-              DeleteObject(LCanvas.Font.Handle);
               LCanvas.Handle := 0;
               LCanvas.Free;
               RestoreDC(hdc, SaveIndex);
@@ -1470,9 +1601,9 @@ begin
   if SameText(LThemeClass, VSCLASS_TREEVIEW) then
   begin
     case iPartId of
-      1 :
+      TVP_TREEITEM:
       begin
-        if iStateId in [1,2] then
+        if iStateId in [TREIS_NORMAL, TREIS_HOT] then
         begin
           SaveIndex := SaveDC(hdc);
           try
@@ -1490,8 +1621,6 @@ begin
                 LCanvas.Font.Handle := CreateFontIndirect(plf);
                 StyleServices.DrawText(LCanvas.Handle, LDetails, string(pszText), pRect^, TTextFormatFlags(dwTextFlags), ThemeTextColor);
               finally
-                if pOptions.dwFlags AND DTT_FONTPROP <> 0  then
-                  DeleteObject(LCanvas.Font.Handle);
                 LCanvas.Handle := 0;
                 LCanvas.Free;
               end;
@@ -1524,7 +1653,7 @@ begin
     case iPartId of
       LVP_GROUPHEADER:
         begin
-          if iStateId = 0 then
+          if iStateId = VS_STATE_COMMON then
           begin
             LCanvas := TCanvas.Create;
             SaveIndex := SaveDC(hdc);
@@ -1543,8 +1672,6 @@ begin
               StyleServices.DrawText(LCanvas.Handle, LDetails, string(pszText), pRect^, TTextFormatFlags(dwTextFlags),
                 ThemeTextColor);
             finally
-              if pOptions.dwFlags AND DTT_FONTPROP <> 0 then
-                DeleteObject(LCanvas.Font.Handle);
               LCanvas.Handle := 0;
               LCanvas.Free;
               RestoreDC(hdc, SaveIndex);
@@ -1604,8 +1731,6 @@ begin
             StyleServices.DrawText(LCanvas.Handle, LDetails, string(pszText), pRect^, TTextFormatFlags(dwTextFlags),
               ThemeTextColor);
           finally
-            if pOptions.dwFlags AND DTT_FONTPROP <> 0 then
-              DeleteObject(LCanvas.Font.Handle);
             LCanvas.Handle := 0;
             LCanvas.Free;
             RestoreDC(hdc, SaveIndex);
@@ -1633,10 +1758,10 @@ var
   LColor: TColor;
 begin
   case iPartId of
-    1:
+    IB_BACKGROUND:
       begin
         case iStateId of
-          1: // normal
+          IBS_NORMAL: // normal
             begin
               LDetails := StyleServices.GetElementDetails(tpPanelBackground);
               StyleServices.GetElementColor(LDetails, ecFillColor, LColor);
@@ -1644,7 +1769,7 @@ begin
               exit(S_OK);
             end;
 
-          2: // hot
+          IBS_HOT: // hot
             begin
               LDetails := StyleServices.GetElementDetails(tpPanelBackground);
               StyleServices.GetElementColor(LDetails, ecFillColor, LColor);
@@ -1652,7 +1777,7 @@ begin
               exit(S_OK);
             end;
 
-          3: // Pressed
+          IBS_PRESSED: // Pressed
             begin
               LDetails := StyleServices.GetElementDetails(tpPanelBackground);
               StyleServices.GetElementColor(LDetails, ecFillColor, LColor);
@@ -1660,7 +1785,7 @@ begin
               exit(S_OK);
             end;
 
-          4: // selected
+          IBS_SELECTED: // selected
             begin
               LDetails := StyleServices.GetElementDetails(tpPanelBackground);
               StyleServices.GetElementColor(LDetails, ecFillColor, LColor);
@@ -1681,10 +1806,10 @@ function UxTheme_BreadCrumBar(hTheme: hTheme; hdc: hdc; iPartId, iStateId: Integ
   Trampoline: TDrawThemeBackground; LThemeClass: string; hwnd: hwnd): HRESULT; stdcall;
 begin
   case iPartId of
-    1:
+    BCB_OVERFLOWCHEVRON:
       begin
         case iStateId of
-          1:
+          BCBS_NORMAL:
             begin
               // DrawStyleFillRect(hdc, pRect, clGreen);
               DrawStyleElement(hdc, StyleServices.GetElementDetails(ttbButtonNormal), pRect);
@@ -1692,21 +1817,21 @@ begin
               exit(S_OK);
             end;
 
-          2:
+          BCBS_HOT:
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(ttbButtonNormal), pRect);
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tsArrowBtnLeftNormal), pRect);
               exit(S_OK);
             end;
 
-          3: // Pressed
+          BCBS_PRESSED: // Pressed
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(ttbButtonPressed), pRect);
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tsArrowBtnLeftPressed), pRect);
               exit(S_OK);
             end;
 
-          8: // fade out (hot)
+          BCBS_FADEOUTHOT: // fade out (hot)
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(ttbButtonHot), pRect);
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tsArrowBtnLeftHot), pRect);
@@ -1726,7 +1851,7 @@ function UxTheme_TryHarder(hTheme: hTheme; hdc: hdc; iPartId, iStateId: Integer;
   Trampoline: TDrawThemeBackground; LThemeClass: string; hwnd: hwnd): HRESULT; stdcall;
 begin
   case iPartId of
-    0:
+    TRYHARDER_COMMON:
       begin
         DrawStyleFillRect(hdc, pRect, StyleServices.GetSystemColor(clWindow));
         exit(S_OK);
@@ -2022,7 +2147,7 @@ function UxTheme_ListViewPopup(hTheme: hTheme; hdc: hdc; iPartId, iStateId: Inte
   Trampoline: TDrawThemeBackground; LThemeClass: string; hwnd: hwnd): HRESULT; stdcall;
 begin
   case iPartId of
-    0:
+    VS_PART_COMMON:
       begin
         DrawStyleFillRect(hdc, pRect, StyleServices.GetSystemColor(clWindow));
         // Windows Vista - W7
@@ -2044,7 +2169,7 @@ var
   SaveIndex: Integer;
 begin
   case iPartId of
-    0:
+    VS_PART_COMMON:
       begin
         DrawStyleElement(hdc, StyleServices.GetElementDetails(tcpThemedHeader), pRect);
         exit(S_OK);
@@ -2248,11 +2373,11 @@ var
   LColor: TColor;
 begin
   case iPartId of
-    1:
+    PREVIEWPANE_PREVIEWBACKGROUND:
       begin
         case iStateId of
           // background
-          1:
+          PPS_NORMAL:
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tcpThemedHeader), pRect);
               exit(S_OK);
@@ -2260,11 +2385,11 @@ begin
         end;
       end;
 
-    3:
+    PREVIEWPANE_NAVPANESIZER:
       begin
         case iStateId of
           // left border of listview
-          0:
+          PPS_COMMON:
             begin
               StyleServices.GetElementColor(StyleServices.GetElementDetails(tpPanelBackground), ecFillColor, LColor);
               DrawStyleFillRect(hdc, pRect, LColor);
@@ -2273,11 +2398,11 @@ begin
         end;
       end;
 
-    4:
+    PREVIEWPANE_READINGPANESIZER:
       begin
         case iStateId of
           // left border of preview pane
-          0:
+          PPS_COMMON:
             begin
               StyleServices.GetElementColor(StyleServices.GetElementDetails(tpPanelBackground), ecFillColor, LColor);
               DrawStyleFillRect(hdc, pRect, LColor);
@@ -2301,16 +2426,16 @@ var
 
 begin
   case iPartId of
-    0:
+    VS_PART_COMMON:
       begin
         case iStateId of
-          0:
+          VS_STATE_COMMON:
             begin
               if (hwnd <> 0) then
                 DrawStyleParentBackground(hwnd, hdc, pRect);
               LDetails.Element := teToolBar;
-              LDetails.Part := 0;
-              LDetails.State := 0;
+              LDetails.Part := VS_PART_COMMON;
+              LDetails.State := VS_STATE_COMMON;
               // DrawStyleFillRect(hdc, pRect, clYellow);
               // DrawStyleElement(hdc, StyleServices.GetElementDetails(tmPopupBackground), pRect);
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tmPopupBackground), pRect);
@@ -2466,11 +2591,11 @@ function UxTheme_AddressBand(hTheme: hTheme; hdc: hdc; iPartId, iStateId: Intege
 begin
   case iPartId of
     // address bar control
-    1:
+    ADDRESSBAND_BACKGROUND:
       begin
         case iStateId of
           // normal
-          1:
+          ABS_NORMAL:
             begin
               // DrawStyleElement(hdc, StyleServices.GetElementDetails(teEditBorderNoScrollNormal), pRect);
               DrawStyleFillRect(hdc, pRect, StyleServices.GetSystemColor(clWindow));
@@ -2478,7 +2603,7 @@ begin
               exit(S_OK);
             end;
           // hot
-          2:
+          ABS_HOT:
             begin
               // DrawStyleElement(hdc, StyleServices.GetElementDetails(teEditBorderNoScrollHot), pRect);
               DrawStyleFillRect(hdc, pRect, StyleServices.GetSystemColor(clWindow));
@@ -2486,7 +2611,7 @@ begin
               exit(S_OK);
             end;
           // editing
-          4:
+          ABS_FOCUSED:
             begin
               // DrawStyleElement(hdc, StyleServices.GetElementDetails(teEditBorderNoScrollFocused), pRect);
               DrawStyleFillRect(hdc, pRect, StyleServices.GetSystemColor(clWindow));
@@ -2512,23 +2637,23 @@ begin
 
   case iPartId of
     // searchbox control
-    1:
+    SEARCHBOX_BACKGROUND:
       begin
         case iStateId of
           // normal
-          1:
+          SBS_NORMAL:
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(teEditBorderNoScrollNormal), pRect);
               exit(S_OK);
             end;
           // hot
-          2:
+          SBS_HOT:
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(teEditBorderNoScrollHot), pRect);
               exit(S_OK);
             end;
 
-          4: // editing
+          SBS_FOCUSED: // editing
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(teEditBorderNoScrollFocused), pRect);
               exit(S_OK);
@@ -2561,11 +2686,11 @@ begin
     // end;
 
     // Magnifier
-    3:
+    SEARCHBOX_SEARCHBUTTON:
       begin
         case iStateId of
 
-          1: // normal
+          SBS_NORMAL: // normal
             begin
               FontAwesome.DrawChar(hdc, fa_search, pRect, StyleServices.GetSystemColor(clHighlight));
               exit(S_OK);
@@ -2913,19 +3038,19 @@ var
   LIcon: Word;
 begin
   case iPartId of
-    1, // left  button
-    2: // right button
+    NAV_BACKBUTTON, // left  button
+    NAV_FORWARDBUTTON: // right button
       begin
 
         case iStateId of
-          1, // enabled left
-          2, // hot  left
-          3, // pressed left
-          4: // disabled left
+          NAV_BB_NORMAL, // enabled left
+          NAV_BB_HOT, // hot  left
+          NAV_BB_PRESSED, // pressed left
+          NAV_BB_DISABLED: // disabled left
             begin
               LBitmap := TBitmap.Create;
               try
-                if iPartId = 1 then
+                if iPartId = NAV_BACKBUTTON then
                   LIcon := fa_arrow_left
                 else
                   LIcon := fa_arrow_right;
@@ -2938,7 +3063,7 @@ begin
                 DrawStyleFillRect(LBitmap.Canvas.Handle, pRect, LColor);
 
                 case iStateId of
-                  1:
+                  NAV_BB_NORMAL:
                     begin
                       DrawStyleElement(LBitmap.Canvas.Handle, StyleServices.GetElementDetails(ttbButtonNormal), pRect);
                       // DrawStyleElement(LBitmap.Canvas.Handle, StyleServices.GetElementDetails(tbCommandLinkGlyphNormal), LRect);
@@ -2948,7 +3073,7 @@ begin
                       FontAwesome.DrawChar(LBitmap.Canvas.Handle, LIcon, LRect,
                         StyleServices.GetSystemColor(clBtnText));
                     end;
-                  2:
+                  NAV_BB_HOT:
                     begin
                       DrawStyleElement(LBitmap.Canvas.Handle, StyleServices.GetElementDetails(ttbButtonHot), pRect);
                       // DrawStyleElement(LBitmap.Canvas.Handle, StyleServices.GetElementDetails(tbCommandLinkGlyphHot), LRect);
@@ -2959,7 +3084,7 @@ begin
                         StyleServices.GetSystemColor(clHighlight));
                     end;
 
-                  3:
+                  NAV_BB_PRESSED:
                     begin
                       DrawStyleElement(LBitmap.Canvas.Handle, StyleServices.GetElementDetails(ttbButtonPressed), pRect);
                       // DrawStyleElement(LBitmap.Canvas.Handle, StyleServices.GetElementDetails(tbCommandLinkGlyphPressed), LRect);
@@ -2970,7 +3095,7 @@ begin
                         StyleServices.GetSystemColor(clHighlight));
                     end;
 
-                  4:
+                  NAV_BB_DISABLED:
                     begin
                       DrawStyleElement(LBitmap.Canvas.Handle,
                         StyleServices.GetElementDetails(ttbButtonDisabled), pRect);
@@ -3001,31 +3126,31 @@ begin
 
       end;
 
-    3: // drop down button
+    NAV_MENUBUTTON: // drop down button
       begin
         case iStateId of
-          1: // enabled
+          NAV_MB_NORMAL: // enabled
             begin
               DrawStyleFillRect(hdc, pRect, StyleServices.GetSystemColor(clBtnFace));
               DrawStyleElement(hdc, StyleServices.GetElementDetails(ttbSplitButtonDropDownNormal), pRect);
               exit(S_OK);
             end;
 
-          2: // hot
+          NAV_MB_HOT: // hot
             begin
               DrawStyleFillRect(hdc, pRect, StyleServices.GetSystemColor(clBtnFace));
               DrawStyleElement(hdc, StyleServices.GetElementDetails(ttbSplitButtonDropDownHot), pRect);
               exit(S_OK);
             end;
 
-          3: // pressed
+          NAV_MB_PRESSED: // pressed
             begin
               DrawStyleFillRect(hdc, pRect, StyleServices.GetSystemColor(clBtnFace));
               DrawStyleElement(hdc, StyleServices.GetElementDetails(ttbSplitButtonDropDownPressed), pRect);
               exit(S_OK);
             end;
 
-          4: // disabled
+          NAV_MB_DISABLED: // disabled
             begin
               DrawStyleFillRect(hdc, pRect, StyleServices.GetSystemColor(clBtnFace));
               DrawStyleElement(hdc, StyleServices.GetElementDetails(ttbSplitButtonDropDownDisabled), pRect);
@@ -3044,11 +3169,11 @@ function UxTheme_CommonItemsDialog(hTheme: hTheme; hdc: hdc; iPartId, iStateId: 
   Foo: Pointer; Trampoline: TDrawThemeBackground; LThemeClass: string; hwnd: hwnd): HRESULT; Stdcall;
 begin
   case iPartId of
-    1:
+    CID_BACKGROUND:
       begin
         case iStateId of
           // background
-          0:
+          CIDS_COMMON:
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(twWindowRoot), pRect);
               exit(S_OK);
@@ -4015,10 +4140,10 @@ var
 begin
   case iPartId of
     // Top Bar
-    1:
+    CM_MODULEBACKGROUND:
       begin
         case iStateId of
-          0:
+          CMS_COMMON:
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tcpThemedHeader), pRect);
               exit(S_OK);
@@ -4027,17 +4152,17 @@ begin
       end;
 
     // Buttons background
-    3:
+    CM_TASKBUTTON:
       begin
         case iStateId of
           // normal
-          1:
+          CMS_NORMAL:
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonNormal), pRect);
               exit(S_OK);
             end;
           // Hot
-          2:
+          CMS_HOT:
             begin
 
               // DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonHot), pRect);
@@ -4051,7 +4176,7 @@ begin
             end;
 
           // pressed
-          3:
+          CMS_PRESSED:
             begin
               // DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonPressed), pRect);
               LColor := StyleServices.GetSystemColor(clHighlight);
@@ -4064,7 +4189,7 @@ begin
             end;
 
           // focused
-          4:
+          CMS_KEYFOCUSED:
             begin
               // DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonDefaulted), pRect);
               LColor := StyleServices.GetSystemColor(clHighlight);
@@ -4079,18 +4204,18 @@ begin
       end;
 
     // button with dropdown
-    4:
+    CM_SPLITBUTTONLEFT:
       begin
         case iStateId of
           // normal
-          1:
+          CMS_NORMAL:
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonNormal), pRect);
               exit(S_OK);
             end;
 
           // hot
-          2:
+          CMS_HOT:
             begin
               LColor := StyleServices.GetSystemColor(clHighlight);
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonNormal), pRect);
@@ -4103,7 +4228,7 @@ begin
             end;
 
           // pressed
-          3:
+          CMS_PRESSED:
             begin
               LColor := StyleServices.GetSystemColor(clHighlight);
               // AlphaBlendFillCanvas(hdc, LColor, pRect, 96);
@@ -4116,7 +4241,7 @@ begin
             end;
 
           // focused
-          4:
+          CMS_KEYFOCUSED:
             begin
               LColor := StyleServices.GetSystemColor(clHighlight);
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonNormal), pRect);
@@ -4128,7 +4253,7 @@ begin
               exit(S_OK);
             end;
 
-          5: // hot arrow button
+          CMS_NEARHOT: // hot arrow button
             begin
               LColor := StyleServices.GetSystemColor(clHighlight);
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonNormal), pRect);
@@ -4143,17 +4268,17 @@ begin
       end;
 
     // arrow button with dropdown - background
-    5:
+    CM_SPLITBUTTONRIGHT:
       begin
         case iStateId of
           // normal
-          1:
+          CMS_NORMAL:
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonNormal), pRect);
               exit(S_OK);
             end;
           // hot on arrow
-          2:
+          CMS_HOT:
             begin
               // DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonHot), pRect);
               LColor := StyleServices.GetSystemColor(clHighlight);
@@ -4166,7 +4291,7 @@ begin
             end;
 
           // pressed arrow (button down)
-          3:
+          CMS_PRESSED:
             begin
               // DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonPressed), pRect);
               LColor := StyleServices.GetSystemColor(clHighlight);
@@ -4179,7 +4304,7 @@ begin
             end;
 
           // selected
-          4:
+          CMS_KEYFOCUSED:
             begin
               // DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonDefaulted), pRect);
               LColor := StyleServices.GetSystemColor(clHighlight);
@@ -4192,7 +4317,7 @@ begin
             end;
 
           // hot on button
-          5:
+          CMS_NEARHOT:
             begin
               LColor := StyleServices.GetSystemColor(clHighlight);
               // AlphaBlendFillCanvas(hdc, LColor, pRect, 96);
@@ -4208,10 +4333,10 @@ begin
       end;
 
     // dropdown arrow
-    6:
+    CM_MENUGLYPH:
       begin
         case iStateId of
-          0:
+          CMS_COMMON:
             begin
               LRect := pRect;
               LRect.Left := LRect.Left + 5;
@@ -4221,7 +4346,7 @@ begin
             end;
 
           // down arrow normal
-          1:
+          CMS_NORMAL:
             begin
               LRect := pRect;
               LRect.Left := LRect.Left + 2;
@@ -4232,11 +4357,11 @@ begin
         end;
       end;
 
-    8: // arrow button - Top Bar of listview
+    CM_LIBRARYPANEMENUGLYPH: // arrow button - Top Bar of listview
       begin
         case iStateId of
           // normal
-          1:
+          CMS_NORMAL:
             begin
               LRect := pRect;
               LRect.Left := LRect.Left + 5;
@@ -4245,7 +4370,7 @@ begin
               exit(S_OK);
             end;
           // hot
-          2:
+          CMS_HOT:
             begin
               LRect := pRect;
               LRect.Left := LRect.Left + 5;
@@ -4256,19 +4381,19 @@ begin
         end;
       end;
 
-    9: // button -Top Bar of listview
+    CM_LIBRARYPANETOPVIEW: // button -Top Bar of listview
       begin
 
         case iStateId of
           // normal
-          1:
+          CMS_NORMAL:
             begin
               DrawStyleElement(hdc, StyleServices.GetElementDetails(tbPushButtonNormal), pRect);
               exit(S_OK);
             end;
 
           // hot
-          2:
+          CMS_HOT:
             begin
               LColor := StyleServices.GetSystemColor(clHighlight);
               // AlphaBlendFillCanvas(hdc, LColor, pRect, 96);
@@ -4279,7 +4404,7 @@ begin
               exit(S_OK);
             end;
 
-          3: // pressed arrow (button down)
+          CMS_PRESSED: // pressed arrow (button down)
             begin
               LColor := StyleServices.GetSystemColor(clHighlight);
               // AlphaBlendFillCanvas(hdc, LColor, pRect, 96);
@@ -4291,7 +4416,7 @@ begin
             end;
 
           // selected
-          4:
+          CMS_KEYFOCUSED:
             begin
               LColor := StyleServices.GetSystemColor(clHighlight);
               // AlphaBlendFillCanvas(hdc, LColor, pRect, 50);
@@ -4303,7 +4428,7 @@ begin
             end;
 
           // hot on button
-          5:
+          CMS_NEARHOT:
             begin
               LColor := StyleServices.GetSystemColor(clHighlight);
               // AlphaBlendFillCanvas(hdc, LColor, pRect, 96);
@@ -4317,10 +4442,10 @@ begin
       end;
 
     // Top Bar of listview - background  solid color
-    11:
+    CM_LIBRARYPANEBACKGROUND:
       begin
         case iStateId of
-          0:
+          CMS_COMMON:
             begin
               LDetails := StyleServices.GetElementDetails(tpPanelBackground);
               StyleServices.GetElementColor(LDetails, ecFillColor, LColor);
@@ -4331,10 +4456,10 @@ begin
       end;
 
     // Top Bar of listview - backgroundimage
-    12:
+    CM_LIBRARYPANEOVERLAY:
       begin
         case iStateId of
-          0:
+          CMS_COMMON:
             begin
               LDetails := StyleServices.GetElementDetails(tpPanelBackground);
               StyleServices.GetElementColor(LDetails, ecFillColor, LColor);
@@ -4463,6 +4588,7 @@ initialization
 
     // General hooks
     @Trampoline_UxTheme_OpenThemeData := InterceptCreate(themelib, 'OpenThemeData', @Detour_UxTheme_OpenThemeData);
+    @Trampoline_UxTheme_CloseThemeData := InterceptCreate(themelib, 'CloseThemeData', @Detour_UxTheme_CloseThemeData);
     {$IF CompilerVersion >= 30}
     if TOSVersion.Check(10) then
     begin
@@ -4488,6 +4614,7 @@ finalization
   InterceptRemove(@Trampoline_UxTheme_GetThemeSysColor);
   InterceptRemove(@Trampoline_UxTheme_GetThemeSysColorBrush);
   InterceptRemove(@Trampoline_UxTheme_OpenThemeData);
+  InterceptRemove(@Trampoline_UxTheme_CloseThemeData);
   {$IF CompilerVersion >= 30}
   if TOSVersion.Check(10) then
     InterceptRemove(@Trampoline_UxTheme_OpenThemeDataForDPI);
