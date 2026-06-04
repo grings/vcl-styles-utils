@@ -72,6 +72,7 @@
         <DCC_UsePackage>JvGlobus;JvMM;JvManagedThreads;JvDlgs;JvCrypt;vclib;inetdbbde;JvNet;JvDotNetCtrls;DBXSybaseASEDriver;vclimg;fmi;JvXPCtrls;vcldb;vcldsnap;DBXDb2Driver;JvCore;vclribbon;vcl;DBXMSSQLDriver;JvAppFrm;JvDB;JvRuntimeDesign;webdsnap;GR32_DSGN_RSXE2;JclDeveloperTools;GR32_RSXE2;JvDocking;adortl;JvWizards;mbColorLibDXE2;JvHMI;JvBands;vcldbx;JvPluginSystem;JclContainers;DBXOdbcDriver;JvCmp;JvSystem;svnui;SynEdit_RXE2;JvControls;JvTimeFramework;vclactnband;JvJans;JvPrintPreview;JvPageComps;bindcompvcl;JvStdCtrls;JvCustom;Jcl;vclie;vcltouch;websnap;ExceptionExpert16;VclSmp;DataSnapConnectors;dsnapcon;JclVcl;JvPascalInterpreter;vclx;svn;bdertl;JvBDE;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
@@ -80,6 +81,7 @@
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <DCC_UsePackage>vclib;DBXSybaseASEDriver;vclimg;vcldb;vcldsnap;DBXDb2Driver;vclribbon;vcl;DBXMSSQLDriver;webdsnap;adortl;DBXOdbcDriver;SynEdit_RXE2;vclactnband;bindcompvcl;vclie;vcltouch;websnap;VclSmp;DataSnapConnectors;dsnapcon;vclx;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
