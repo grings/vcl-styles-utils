@@ -14,7 +14,9 @@ uses
   {$IFDEF USEVCLSTYLESHOOKS}
   Vcl.Styles.Hooks in '..\..\Common\Vcl.Styles.Hooks.pas',
   Vcl.Styles.UxTheme in '..\..\Common\Vcl.Styles.UxTheme.pas',
+  Vcl.Styles.FontAwesome in '..\..\Common\Vcl.Styles.FontAwesome.pas',
   {$ENDIF}
+  Vcl.Styles.Utils.Misc in '..\..\Common\Vcl.Styles.Utils.Misc.pas',
   Vcl.Styles.Utils.Graphics in '..\..\Common\Vcl.Styles.Utils.Graphics.pas',
   Vcl.Styles.Utils.Menus in '..\..\Common\Vcl.Styles.Utils.Menus.pas',
   Vcl.Styles.Utils.Forms in '..\..\Common\Vcl.Styles.Utils.Forms.pas',

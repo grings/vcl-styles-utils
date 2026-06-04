@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.StdCtrls, Vcl.Styles, Vcl.Themes, Vcl.Menus, Vcl.Buttons, Vcl.ImgList,
-  Vcl.ExtDlgs, Vcl.ComCtrls, System.ImageList;
+  Vcl.ExtDlgs, Vcl.ComCtrls;
 
 type
   TForm1 = class(TForm)
